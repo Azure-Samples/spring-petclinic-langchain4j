@@ -58,9 +58,3 @@ You can also talk with the agent with your own language, like Chinese
 The problem is that your [Term of Use](https://github.com/showpune/spring-petclinic-langchain4j/blob/master/src/main/resources/petclinic-terms-of-use.txt) is in English, the traditional way is that provide a localized term of use for each language, but you can use openAI to make it easier
 
 We can define a [Retrieval Augmentor](https://github.com/showpune/spring-petclinic-langchain4j/blob/c95a598f4fdaf68a3f331b32ca42ef5ef95e5c17/src/main/java/org/springframework/samples/petclinic/chat/AgentConfig.java#L47C21-L47C39), and translate your ask into English before you retrieve the content
-
-
-## License
-
-The Spring PetClinic sample application is released under version 2.0 of
-the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
