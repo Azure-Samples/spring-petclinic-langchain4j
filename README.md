@@ -1,4 +1,4 @@
-# Spring PetClinic With OpenAI and Langchain4j - First AI app on Azure Spring Apps
+# Spring PetClinic With OpenAI and Langchain4j - Launch Your First AI app on Azure Spring Apps
 
 ## Quick Start
 
