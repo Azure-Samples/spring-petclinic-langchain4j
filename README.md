@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-The sample project is an AI application that uses Azure Spring Apps and Azure Open AI. The application provides AI assitant functionality in a Spring Pet Clinic application.
+The sample project is an AI application that uses Azure Spring Apps and Azure OpenAI. The application provides AI assitant functionality in a Spring Pet Clinic application.
 
 You can smoothly get help by having a natural language chat with the AI assistant. The AI assistant can assist you with the following tasks:
 1. Querying the registered pet owners
