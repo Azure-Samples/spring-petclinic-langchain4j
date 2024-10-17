@@ -13,7 +13,7 @@ infra:
   path: infra/bicep
 
 services:
-  petclinic-ai:
+  petclinic-langchain4j :
     resourceName: petclinic-langchain4j
     project: ./
     host: containerapp
@@ -25,6 +25,11 @@ services:
       remoteBuild: true
 
 hooks:
+  postprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/postprovision.sh
+
   prepackage:
     posix:
       shell: sh

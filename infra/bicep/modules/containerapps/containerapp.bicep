@@ -39,8 +39,8 @@ param containerMinReplicas int = 1
 @minValue(1)
 param containerMaxReplicas int = 5
 
-@description('The name of the container')
-param containerName string = 'main'
+@description('The name of the container. Default: the app name')
+param containerName string = ''
 
 @description('Whether this is a Java app. Java app will have Java language stack enabled.')
 param isJava bool = false
@@ -72,6 +72,8 @@ var userIdentities = union({
   empty(umiAppsIdentityId) ? {} : {
     '${umiAppsIdentityId}': {}
   })
+
+var cntName = !empty(containerName) ? containerName : name
 
 resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   name: name
@@ -112,7 +114,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
         {
           image: '${acrName}/${imageName}'
           imageType: 'ContainerImage'
-          name: containerName
+          name: cntName
           env: env
           resources: {
             cpu: json(containerCpuCoreCount)
@@ -162,5 +164,5 @@ resource containerAppsEnvironment 'Microsoft.App/managedEnvironments@2024-03-01'
 
 output appId string = app.id
 output appName string = app.name
-output appContainerName string = containerName
+output appContainerName string = cntName
 output appFqdn string = app.properties.configuration.ingress != null ? app.properties.configuration.ingress.fqdn : ''

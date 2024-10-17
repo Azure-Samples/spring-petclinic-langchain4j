@@ -6,9 +6,6 @@ param accountName string
 @description('')
 param location string = resourceGroup().location
 
-@description('Optional. model name for the TextEmbeddingAda002 language model. ')
-param modelTextEmbeddingAda002 string = 'text-embedding-ada-002'
-
 @description('Optional. model name for the gpt-4 language model. ')
 param modelGpt4 string = 'gpt-4o'
 
@@ -56,26 +53,9 @@ module roleAssignment 'openaiRoleAssignment.bicep' = {
   }
 }
 
-resource modelDeploymentTextEmbeddingAda002 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = if (newOrExisting == 'new') {
-  name: modelTextEmbeddingAda002
-  dependsOn: [ roleAssignment ]
-  parent: account
-  properties: {
-    model: {
-      name: modelTextEmbeddingAda002
-      version: '2'
-      format: modelFormat
-    }
-  }
-  sku: {
-    name: 'Standard'
-    capacity: 1
-  }
-}
-
 resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = if (newOrExisting == 'new') {
   name: modelGpt4
-  dependsOn: [ modelDeploymentTextEmbeddingAda002 ]
+  dependsOn: [ roleAssignment ]
   parent: account
   properties: {
     model: {
@@ -91,4 +71,10 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
 }
 
 @description('Endpoint of the Azure OpenAI service account.')
-output endpoint string = roleAssignment.outputs.endpoint
+output endpoint string = account.properties.endpoint
+
+@description('name')
+output name string = account.name
+
+@description('id')
+output id string = account.id
