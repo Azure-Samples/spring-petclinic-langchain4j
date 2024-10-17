@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.chat;
 
+import com.azure.identity.DefaultAzureCredentialBuilder;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
@@ -32,12 +33,15 @@ public class AgentConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(OpenAIProperties.PREFIX + ".chat-model.api-key")
+	@ConditionalOnProperty(OpenAIProperties.PREFIX + ".chat-model.client-id")
 	AzureOpenAiChatModel openAiChatModel(OpenAIProperties properties) {
 		ChatModelProperties chatModelProperties = properties.getChatModel();
 		return AzureOpenAiChatModel.builder()
 			.endpoint(chatModelProperties.getEndpoint())
-			.apiKey(chatModelProperties.getApiKey())
+			.tokenCredential(
+					new DefaultAzureCredentialBuilder()
+						.managedIdentityClientId(chatModelProperties.getClientId())
+						.build())
 			.deploymentName(chatModelProperties.getDeploymentName())
 			.build();
 	}
