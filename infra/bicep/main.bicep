@@ -15,9 +15,6 @@ param resourceGroupName string = ''
 @description('Name of the the new containerapp environment. Default: aca-env-{environmentName}')
 param managedEnvironmentName string = ''
 
-@description('Name of the the new Keyvault. Default: kv-{environmentName}')
-param keyvaultName string = ''
-
 @description('Name of the Azure Container Registry. Default: cr<uniqString>')
 param acrName string = ''
 
@@ -87,27 +84,6 @@ module openai 'modules/ai/openai.bicep' = {
   }
 }
 
-@description('Create Keyvault')
-module keyvault 'modules/security/keyvault.bicep' = {
-  name: 'keyvault-${environmentName}'
-  scope: rg
-  params: {
-    name: !empty(keyvaultName) ? keyvaultName : '${abbrs.keyVaultVaults}${environmentName}'
-    principalId: umiApps.outputs.principalId
-    tags: tags
-  }
-}
-
-@description('Save OpenAI info to keyvault')
-module saveInfo 'modules/ai/openaiKeys.bicep' = {
-  name: 'save-keys-${environmentName}'
-  scope: rg
-  params: {
-    cogAccountName: openai.outputs.name
-    keyvaultName: keyvault.outputs.name
-  }
-}
-
 @description('Create Azure Container Apps environment')
 module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   name: 'managedEnvironment-${environmentName}'
@@ -139,23 +115,14 @@ module petclinicApp 'modules/containerapps/containerapp.bicep' = {
     isJava: true
     env: [
       {
-        name: 'KEY_VAULT_URI'
-        value: keyvault.outputs.endpoint
+        name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
+        value: openai.outputs.endpoint
+      }
+      {
+        name: 'SPRING_AI_AZURE_OPENAI_CLIENT_ID'
+        value: umiApps.outputs.clientId
       }
     ]
-  }
-}
-
-@description('create service connection')
-module serviceConnection 'modules/containerapps/serviceLinker.bicep' = {
-  name: 'service-connection-app'
-  scope: rg
-  params: {
-    connectionName: 'conn_app_kv'
-    appClientId: umiApps.outputs.clientId
-    appName: petclinicApp.outputs.appName
-    containerName: petclinicApp.outputs.appContainerName
-    resourceId: keyvault.outputs.id
   }
 }
 
