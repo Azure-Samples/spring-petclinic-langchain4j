@@ -29,6 +29,8 @@ class ChatModelProperties {
 
 	String apiKey;
 
+	String clientId;
+
 	String organizationId;
 
 	String deploymentName;
