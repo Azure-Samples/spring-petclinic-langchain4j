@@ -21,3 +21,5 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 }
 
 output endpoint string = account.properties.endpoint
+
+output name string = account.name

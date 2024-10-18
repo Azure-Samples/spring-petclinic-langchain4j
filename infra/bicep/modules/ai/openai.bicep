@@ -71,10 +71,7 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
 }
 
 @description('Endpoint of the Azure OpenAI service account.')
-output endpoint string = account.properties.endpoint
+output endpoint string = roleAssignment.outputs.name
 
 @description('name')
-output name string = account.name
-
-@description('id')
-output id string = account.id
+output name string = roleAssignment.outputs.name
