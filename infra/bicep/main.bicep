@@ -115,11 +115,11 @@ module petclinicApp 'modules/containerapps/containerapp.bicep' = {
     isJava: true
     env: [
       {
-        name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
+        name: 'LANGCHAIN4J_AZURE_OPEN_AI_CHAT_MODEL_ENDPOINT'
         value: openai.outputs.endpoint
       }
       {
-        name: 'SPRING_AI_AZURE_OPENAI_CLIENT_ID'
+        name: 'LANGCHAIN4J_AZURE_OPEN_AI_CHAT_MODEL_CLIENT_ID'
         value: umiApps.outputs.clientId
       }
     ]
