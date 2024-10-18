@@ -1,8 +1,8 @@
-# Spring PetClinic With OpenAI and Langchain4j - Launch Your First AI app on Azure Spring Apps
+# Spring PetClinic With OpenAI and Langchain4j - Launch Your First AI app on Azure Container Apps
 
 ## Quick Start
 
-The sample project is an AI application that uses Azure Spring Apps and Azure Open AI. The application provides AI assitant functionality in a Spring Pet Clinic application.
+The sample project is an AI application that uses Azure Container Apps and Azure OpenAI. The application provides AI assistant functionality in a Spring PetClinic application.
 
 You can smoothly get help by having a natural language chat with the AI assistant. The AI assistant can assist you with the following tasks:
 1. Querying the registered pet owners
@@ -13,7 +13,7 @@ You can smoothly get help by having a natural language chat with the AI assistan
 
 ![image](ai-app-chat.png)
 
-Please follow [Launch the first AI app on Azure Spring Apps](https://learn.microsoft.com/azure/spring-apps/enterprise/quickstart-deploy-ai-app) to deploy the application to Azure Spring Apps.
+You can deploy the application to Azure Container Apps by running just one command `azd up` in the project root directory.
 
 ## The Sequence workflow of langchain4j
 ![image](https://github.com/showpune/spring-petclinic-langchain4j/assets/1787505/543c8ff4-1018-48a6-92f2-5f3ac5bb45f6)

@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.chat;
 
+import com.azure.identity.DefaultAzureCredentialBuilder;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.model.azure.AzureOpenAiChatModel;
 import dev.langchain4j.model.chat.ChatLanguageModel;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.samples.petclinic.condition.ConditionalOnPropertyNotEmpty;
 
 import static dev.langchain4j.internal.ValidationUtils.ensureNotNull;
 
@@ -32,12 +34,25 @@ public class AgentConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(OpenAIProperties.PREFIX + ".chat-model.api-key")
-	AzureOpenAiChatModel openAiChatModel(OpenAIProperties properties) {
+	@ConditionalOnPropertyNotEmpty(OpenAIProperties.PREFIX + ".chat-model.api-key")
+	AzureOpenAiChatModel openAiChatModelWithKey(OpenAIProperties properties) {
 		ChatModelProperties chatModelProperties = properties.getChatModel();
 		return AzureOpenAiChatModel.builder()
 			.endpoint(chatModelProperties.getEndpoint())
 			.apiKey(chatModelProperties.getApiKey())
+			.deploymentName(chatModelProperties.getDeploymentName())
+			.build();
+	}
+
+	@Bean
+	@ConditionalOnPropertyNotEmpty(OpenAIProperties.PREFIX + ".chat-model.client-id")
+	AzureOpenAiChatModel openAiChatModelWithMi(OpenAIProperties properties) {
+		ChatModelProperties chatModelProperties = properties.getChatModel();
+		return AzureOpenAiChatModel.builder()
+			.endpoint(chatModelProperties.getEndpoint())
+			.tokenCredential(
+					new DefaultAzureCredentialBuilder().managedIdentityClientId(chatModelProperties.getClientId())
+						.build())
 			.deploymentName(chatModelProperties.getDeploymentName())
 			.build();
 	}

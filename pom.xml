@@ -35,7 +35,7 @@
         <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
         <spring-format.version>0.0.41</spring-format.version>
         <langchain4j.version>0.30.0</langchain4j.version>
-
+        <azure-identity.version>1.13.2</azure-identity.version>
     </properties>
 
     <dependencies>
@@ -174,9 +174,9 @@
         </dependency>
 
         <dependency>
-          <groupId>com.azure.spring</groupId>
-          <artifactId>spring-cloud-azure-starter-keyvault</artifactId>
-          <version>5.11.0</version>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-identity</artifactId>
+            <version>${azure-identity.version}</version>
         </dependency>
 
     </dependencies>

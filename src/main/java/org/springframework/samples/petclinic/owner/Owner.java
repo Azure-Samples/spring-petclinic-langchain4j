@@ -18,6 +18,8 @@ package org.springframework.samples.petclinic.owner;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.Assert;
@@ -34,18 +36,22 @@ import java.util.List;
  * @author Michael Isvy
  * @author Oliver Drotbohm
  */
+@Getter
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
 
+	@Setter
 	@Column(name = "address")
 	@NotBlank
 	private String address;
 
+	@Setter
 	@Column(name = "city")
 	@NotBlank
 	private String city;
 
+	@Setter
 	@Column(name = "telephone")
 	@NotBlank
 	@Digits(fraction = 0, integer = 10)
@@ -55,34 +61,6 @@ public class Owner extends Person {
 	@JoinColumn(name = "owner_id")
 	@OrderBy("name")
 	private List<Pet> pets = new ArrayList<>();
-
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCity() {
-		return this.city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getTelephone() {
-		return this.telephone;
-	}
-
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	public List<Pet> getPets() {
-		return this.pets;
-	}
 
 	public void addPet(Pet pet) {
 		if (pet.isNew()) {
