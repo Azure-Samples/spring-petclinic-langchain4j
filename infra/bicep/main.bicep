@@ -123,6 +123,8 @@ module petclinicApp 'modules/containerapps/containerapp.bicep' = {
         value: umiApps.outputs.clientId
       }
     ]
+    containerCpuCoreCount: '2'
+    containerMemory: '4Gi'
   }
 }
 

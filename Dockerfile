@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # run
-FROM mcr.microsoft.com/openjdk/jdk:17-distroless
+FROM mcr.microsoft.com/openjdk/jdk:17-mariner
 
 COPY ./target/spring-petclinic-langchain4j-0.0.1-SNAPSHOT.jar app.jar
 
