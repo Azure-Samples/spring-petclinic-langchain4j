@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: spring-petclinic-langchain4j
+
+workflows:
+  up:
+    - azd: provision
+    - azd: package --all
+    - azd: deploy --all
+
+infra:
+  provider: bicep
+  path: infra/bicep
+
+services:
+  petclinic-langchain4j :
+    resourceName: petclinic-langchain4j
+    project: ./
+    host: containerapp
+    language: java
+    docker:
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      image: spring-petclinic-langchain4j/petclinic-langchain4j
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
+
+hooks:
+  postprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/postprovision.sh
+
+  prepackage:
+    posix:
+      shell: sh
+      run: 'chmod +x ./mvnw; ./mvnw clean package -DskipTests'
