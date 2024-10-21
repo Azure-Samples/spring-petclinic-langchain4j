@@ -13,8 +13,7 @@
         "ghcr.io/devcontainers/features/azure-cli:1": {
             "extensions": [
                 "account",
-                "containerapp",
-                "serviceconnector-passwordless"
+                "containerapp"
             ],
             "installBicep": true
         },
