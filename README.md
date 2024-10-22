@@ -13,7 +13,34 @@ You can smoothly get help by having a natural language chat with the AI assistan
 
 ![image](ai-app-chat.png)
 
-You can deploy the application to Azure Container Apps by running just one command `azd up` in the project root directory.
+## Deploy the project to Azure using GitHub Codespace
+
+### Prerequisites
+
+For running this lab you will need:
+
+* A GitHub account
+* An Azure Subscription
+
+### Step by Step guide
+
+1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/spring-petclinic-langchain4j) and select **Fork**.
+
+   {: .note }
+   > In case you are using a GitHub EMU account, it might be you are not able to fork a public repository. In that case, create a new repository with the same name, clone the original repository, add your new repository as a remote and push to this new remote.
+
+1. Make sure your own username is indicated as the fork `Owner`
+1. Select **Create fork**. This will create a copy or fork of this project in your own account.
+1. Navigate to the newly forked GitHub project.
+1. Select **Code** and next **Codespaces**.
+1. Select **Create a codespace**.
+
+Your codespace will now get created in your browser window. Once creation is done, you can start executing the next steps in the terminal:
+
+1. Run `azd auth login`, follow the prompts to login to Azure.
+1. Run `azd up`, input the **environment name**, select your **subscription** and **location**.
+
+The project will be ready in 20 minutes.
 
 ## The Sequence workflow of langchain4j
 ![image](https://github.com/showpune/spring-petclinic-langchain4j/assets/1787505/543c8ff4-1018-48a6-92f2-5f3ac5bb45f6)
