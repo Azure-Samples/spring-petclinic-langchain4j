@@ -66,7 +66,7 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
   }
   sku: {
     name: 'GlobalStandard'
-    capacity: 1
+    capacity: 100
   }
 }
 

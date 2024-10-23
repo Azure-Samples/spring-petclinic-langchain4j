@@ -18,10 +18,7 @@ package org.springframework.samples.petclinic.chat;
 import dev.langchain4j.agent.tool.Tool;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
-import org.springframework.samples.petclinic.owner.Pet;
-import org.springframework.samples.petclinic.owner.PetType;
+import org.springframework.samples.petclinic.owner.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -42,8 +39,8 @@ public class OwnerTools {
 
 	@Tool(value = {
 			"Query the owners by name, the owner information include owner id, address, telephone, city, first name and last name",
-			"The owner also include the pets information, include the pet name, pet type and birth",
-			"The pet include serveral visit record, include the visit name and visit date" })
+			"The owner also include the pets information, include the pet name, pet type and birth date",
+			"The pet include several visit record, include the visit description and visit date" })
 	List<Owner> queryOwners(String name) {
 		Pageable pageable = PageRequest.of(0, 5);
 		return owners.findByLastName(name, pageable).toList();
@@ -90,12 +87,12 @@ public class OwnerTools {
 		return this.owners.findPetTypes();
 	}
 
-	@Tool(value = { "Create a new pet by  Owner id, Pet Type, Pet Type Id and Name" })
-	public void addPet(int ownerid, String petType, int petTypeId, String name) {
-		Owner owner = owners.findById(ownerid);
+	@Tool(value = { "Create a new pet by Owner id, Pet Type, Pet Type Id, Birth Date and Name" })
+	public void addPet(int ownerId, String petType, int petTypeId, String birthDate, String name) {
+		Owner owner = owners.findById(ownerId);
 		Pet pet = new Pet();
 		pet.setName(name);
-		pet.setBirthDate(LocalDate.now());
+		pet.setBirthDate(LocalDate.parse(birthDate));
 		pet.setType(new PetType() {
 			{
 				setName(petType);
@@ -106,4 +103,16 @@ public class OwnerTools {
 		this.owners.save(owner);
 	}
 
+	@Tool(value = {"Add a new visit by Owner Id, Pet Name, Visit Date and Visit Description"})
+	public void addVisit(int ownerId, String petName, String visitDate, String description) {
+		Owner owner = owners.findById(ownerId);
+		Pet pet = owner.getPet(petName);
+
+		Visit visit = new Visit();
+		visit.setDate(LocalDate.parse(visitDate));
+		visit.setDescription(description);
+
+		pet.addVisit(visit);
+		owners.save(owner);
+	}
 }
