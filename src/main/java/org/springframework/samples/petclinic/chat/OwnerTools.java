@@ -103,7 +103,7 @@ public class OwnerTools {
 		this.owners.save(owner);
 	}
 
-	@Tool(value = {"Add a new visit by Owner Id, Pet Name, Visit Date and Visit Description"})
+	@Tool(value = { "Add a new visit by Owner Id, Pet Name, Visit Date and Visit Description" })
 	public void addVisit(int ownerId, String petName, String visitDate, String description) {
 		Owner owner = owners.findById(ownerId);
 		Pet pet = owner.getPet(petName);
@@ -115,4 +115,5 @@ public class OwnerTools {
 		pet.addVisit(visit);
 		owners.save(owner);
 	}
+
 }
