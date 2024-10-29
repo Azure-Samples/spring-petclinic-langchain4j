@@ -28,6 +28,7 @@ var placeholderImage = 'azurespringapps/default-banner:latest'
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {
   'azd-env-name': environmentName
+  'azure-samples-spring-petclinic-langchain4j': true
   'utc-time': utcValue
 }
 
